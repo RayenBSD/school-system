@@ -116,9 +116,13 @@ def addStudent():
             check = False
             lessons.append(lesson_name)
 
-            wantMore = int(input("For more lesson press 1 else no: "))
+            wantMore = input("For more lesson press y else n: ")
 
-            if (wantMore == 1):
+            while not (wantMore == 'y' or wantMore == 'n'):
+                print("\nCheck your lesson data\n")
+                wantMore = input("For more lesson press y else n: ")
+
+            if wantMore == 'y':
                 check = True
 
         else:
@@ -168,11 +172,11 @@ def deleteData():
         else:
             print("\nCheck your data\n")
 
-        cur.execute(f"""DELETE FROM lessons WHERE user_id={student['id']}""")
-        cur.execute(f"""DELETE FROM students 
+    cur.execute(f"""DELETE FROM lessons WHERE user_id={student['id']}""")
+    cur.execute(f"""DELETE FROM students 
                         WHERE id={student['id']} AND first_name='{student['first_name']}' AND last_name='{student['last_name']}' AND age={student['age']} AND class='{student['class']}'""")
 
-        print(f"student with id {student['id']} has deleted")
+    print(f"student with id {student['id']} has deleted")
                
 def updateData():
     student = {
@@ -237,9 +241,9 @@ def updateData():
         else:
             print("\nCheck your data\n")
 
-        cur.execute(f"""UPDATE students set last_name='{new_student_data["last_name"]}', first_name='{new_student_data["first_name"]}', age={new_student_data["age"]}, class='{new_student_data["class"]}' WHERE id={student["id"]} AND last_name='{student["last_name"]}' AND first_name='{student["first_name"]}' AND age={student["age"]} AND class='{student["class"]}'""")
+    cur.execute(f"""UPDATE students set last_name='{new_student_data["last_name"]}', first_name='{new_student_data["first_name"]}', age={new_student_data["age"]}, class='{new_student_data["class"]}' WHERE id={student["id"]} AND last_name='{student["last_name"]}' AND first_name='{student["first_name"]}' AND age={student["age"]} AND class='{student["class"]}'""")
 
-        print("Data updated")
+    print("Data updated")
 
 def selectData():
     student = {
@@ -278,12 +282,12 @@ def selectData():
         else:
             print("\nCheck your data\n")
 
-        result = cur.execute(f"""SELECT students.id, students.first_name, students.last_name, students.age, students.class, students.date_registration, lessons.lesson_name 
+    result = cur.execute(f"""SELECT students.id, students.first_name, students.last_name, students.age, students.class, students.date_registration, lessons.lesson_name 
                         FROM students
                         LEFT JOIN lessons
                         WHERE students.id = lessons.user_id AND students.id = {student['id']}""")
 
-        print(f"\n{result.fetchall()}\n")
+    print(f"\n{result.fetchall()}\n")
 
 def main():
 
