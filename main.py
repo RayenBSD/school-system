@@ -46,7 +46,6 @@ def checkStudentID (id):
     data = cur.execute(f"SELECT * FROM students WHERE id = {id}").fetchone()
 
     if not (data is None):
-        print("\nCheck your ID\n")
         return True
     return False
 
