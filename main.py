@@ -45,7 +45,7 @@ def checkStudentID (id):
 
     data = cur.execute(f"SELECT * FROM students WHERE id = {id}").fetchone()
 
-    if not(data is None):
+    if not (data is None):
         print("\nCheck your ID\n")
         return True
     return False
@@ -278,6 +278,15 @@ def selectData():
                 student["age"] = input("Enter your age: ")
                 student["class"] = input("Enter you class: ")
         
+            check = False
+        elif re.findall("[1-9]", student["id"]):
+
+            if student["first_name"] or student["last_name"] or student["age"] or student["class"]:
+                print("\nCheck your data\n")
+            else:
+                while not checkStudentID(student["id"]):
+                    student["id"] = input("Enter your ID: ")
+            
             check = False
         else:
             print("\nCheck your data\n")
